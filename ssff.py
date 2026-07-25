@@ -291,6 +291,7 @@ def screenshot(st):
         if page_num == 'auto':
             if ss_old == ss:
                 break
+        ss_old = ss
 
         # sharpen filter
         if sharpen:
@@ -320,7 +321,6 @@ def screenshot(st):
         time.sleep(interval)
 
         # next
-        ss_old = ss
         page += 1
         
     print('Screenshot process completed.')
