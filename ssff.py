@@ -8,10 +8,10 @@ import traceback
 import pyautogui
 import win32gui
 import ctypes
-from PIL import Image, ImageChops
+from PIL import Image, ImageChops, ImageFilter
 
 
-VERSION = 'v0.4.0'
+VERSION = 'v0.5.0'
 
 
 def main():
@@ -167,6 +167,18 @@ def fill_setting(st):
             st[key] = 'none'
     print(f'{key} = {st[key]}')
 
+    key = 'sharpen'
+    print(f'\n[{key}]')
+    if key not in st:
+        print('Sharpen filter [yes(y)|no(n)].\nDefault: no')
+        st[key] = intput_with_default('> ', 'no')
+    match st[key].lower():
+        case 'y' | 'yes':
+            st[key] = 'yes'
+        case _:
+            st[key] = 'no'
+    print(f'{key} = {st[key]}')
+
     key = 'vsplit'
     print(f'\n[{key}]')
     if key not in st:
@@ -233,6 +245,7 @@ def screenshot(st):
     y1 = st['ss_top']
     y2 = st['ss_bottom']
     trim = st['trim']
+    sharpen = (st['sharpen'] == 'yes')
     vsplit = (st['vsplit'] == 'yes')
     target_window = st['target_window']
     dir_name = st['dir_name']
@@ -253,6 +266,9 @@ def screenshot(st):
     ss_old = None
     page = 1
     fno = start_file_no
+
+    # sharpen filter
+    sharp_filter = ImageFilter.UnsharpMask(radius=1.0, percent=100, threshold=8)
 
     # main process
     while True:
@@ -275,6 +291,10 @@ def screenshot(st):
         if page_num == 'auto':
             if ss_old == ss:
                 break
+
+        # sharpen filter
+        if sharpen:
+            ss = ss.filter(sharp_filter)
 
         if vsplit and ss.width > ss.height:
             # vertical split

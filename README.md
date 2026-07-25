@@ -107,6 +107,11 @@ Automatically removes marginal areas (areas of the same continuous color) in scr
 ### "fit-onetime" or "o".
 Automatically removes marginal areas (areas of the same continuous color) in screenshot images. The trim size calculated for the first page (front cover) is used for all pages.  
 
+## `sharpen`
+Apply sharpening to make blurry text clearer.  
+
+Set "yes" or "no".  
+
 ## `vsplit`
 Split image vertical, if width > height. (String)  
 

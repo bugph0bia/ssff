@@ -8,6 +8,7 @@
     "ss_right": 1520,
     "ss_top": "max",
     "ss_bottom": "max",
+    "sharpen": "no",
     "trim": "fit-onetime",
     "vsplit": "no",
     "target_window": "Acrobat",
